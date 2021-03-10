@@ -93,6 +93,7 @@ h1 {
   background: #e63946;
   color: #fff;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .btn-del:hover {
@@ -167,7 +168,7 @@ tbody tr td:nth-child(3) {
 }
 
 .copyright {
-  margin-top: 2rem;
+  margin-top: 1rem;
   text-align: center;
   color: #fff;
 }

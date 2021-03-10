@@ -32,19 +32,16 @@
     }
 
     // Deleting todo from database
-    if(isset($_POST["delete"])){
-        $todoId = $_POST["todo-id"];
+    if(isset($_GET["id"])){
+        $id = $_GET["id"];
 
-        $delQuery = "DELETE FROM tasks WHERE id = $todoId";
+        $delQuery = "DELETE FROM tasks WHERE id = $id";
 
-        if(!empty($todoId)){
-            $delete = mysqli_query($db_conn, $delQuery);
-            unset($todoId);
+        $delete = mysqli_query($db_conn, $delQuery);
 
-            $reloadPage = $_SERVER["PHP_SELF"];
+        $reloadPage = $_SERVER["PHP_SELF"];
 
-            header("Location: $reloadPage");
-        }
+        header("Location: $reloadPage");
     }
 ?>
 <!DOCTYPE html>
@@ -63,7 +60,7 @@
             <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
                 <div class="input-group">
                     <input type="text" name="todo" id="todo-input" class="form-control">
-                    <button type="submit" name="submit" class="btn-add">Add Todo</button>
+                    <button type="submit" name="submit" class="btn-add">Add Task</button>
                 </div>
             </form>
         </div>
@@ -78,13 +75,12 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Todos</th>
+                                <th>Tasks</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                                    // echo "<script>alert('Data found')</script>";
                                     $a = 0;
                                     while($row = mysqli_fetch_assoc($select)){
                             ?>
@@ -92,12 +88,7 @@
                                         <td><?php echo $a += 1; ?></td>
                                         <td><?php echo $row["body"]; ?></td>
                                         <td>
-                                            <?php ?>
-                                                <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
-                                                    <input type="text" name="todo-id" id="todo-id" value="<?php echo $row["id"] ?>">
-                                                    <button type="submit" name="delete" class='btn-del'>Delete</button>
-                                                </form>
-                                            <?php ?>
+                                            <a class="btn-del" href="index.php?id=<?php echo $row["id"] ?>">X</a>
                                         </td>
                                     </tr>
                             <?php } ?>
